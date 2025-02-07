@@ -3,7 +3,6 @@ pipeline {
 
   environment {
     APP_NAME = 'dadjoke'
-    GITEA_TOKEN = credentials('GITEA_TOKEN')
     BRANCH_NAME = "${BRANCH_NAME}"
   }
 
@@ -21,6 +20,10 @@ pipeline {
     }
 
     stage('Checkout') {
+      environment {
+        GITEA_TOKEN = credentials('GITEA_TOKEN')
+      }
+
       steps {
         git(
           branch: "${BRANCH_NAME}",
@@ -32,6 +35,22 @@ pipeline {
     stage('Build') {
       steps {
         sh 'mvn clean package -DskipTests'
+      }
+    }
+
+    stage('SonarQube Analysis') {
+      environment {
+        SONAR_TOKEN = credentials('SONAR_TOKEN')
+      }
+
+      steps {
+        sh """
+          mvn clean verify sonar:sonar \\
+            -Dsonar.projectKey=${APP_NAME} \\
+            -Dsonar.host.url=http://192.168.100.20:9001 \\
+            -Dsonar.login=\${SONAR_TOKEN}
+        """
+        waitForQualityGate abortPipeline: true
       }
     }
   }
