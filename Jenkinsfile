@@ -44,12 +44,14 @@ pipeline {
       }
 
       steps {
-        sh """
-          mvn clean verify sonar:sonar \\
-            -Dsonar.projectKey=${APP_NAME} \\
-            -Dsonar.host.url=http://192.168.100.20:9001 \\
-            -Dsonar.login=\${SONAR_TOKEN}
-        """
+        withSonarQubeEnv('Homelab SonarQube') {
+          sh """
+            mvn clean verify sonar:sonar \
+              -Dsonar.projectKey=${APP_NAME} \
+              -Dsonar.host.url=http://192.168.100.20:9001 \
+              -Dsonar.login=\${SONAR_TOKEN}
+          """
+        }
         waitForQualityGate abortPipeline: true
       }
     }
