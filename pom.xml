@@ -88,6 +88,13 @@
       <artifactId>spring-shell-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <!--  CI/CD  -->
+    <dependency>
+      <groupId>org.sonarsource.scanner.maven</groupId>
+      <artifactId>sonar-maven-plugin</artifactId>
+      <version>5.0.0.4389</version>
+    </dependency>
   </dependencies>
 
   <dependencyManagement>
