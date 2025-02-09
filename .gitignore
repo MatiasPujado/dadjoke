@@ -269,3 +269,7 @@ target
 target/
 target/*
 target/**/*
+
+.sonarlint
+.sonarlint/
+.sonarlint/*
