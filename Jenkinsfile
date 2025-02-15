@@ -38,6 +38,12 @@ pipeline {
       }
     }
 
+    stage('Unit Tests') {
+      steps {
+        sh 'mvn test'
+      }
+    }
+
     stage('SonarQube Analysis') {
       environment {
         SONAR_TOKEN = credentials('SONAR_TOKEN')
