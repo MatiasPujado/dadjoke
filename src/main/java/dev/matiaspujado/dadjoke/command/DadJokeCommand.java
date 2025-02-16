@@ -14,8 +14,6 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
-import java.util.StringJoiner;
-
   /**
    * Shell component for Dad Joke commands.
    */
@@ -82,7 +80,7 @@ import java.util.StringJoiner;
     public String searchJoke(
       @Option @ShellOption(defaultValue = "1") String page,
       @Option @ShellOption(defaultValue = "20") String limit,
-      @Option @ShellOption(defaultValue = "list all jokes", arity = 10) String term
+      @Option @ShellOption(defaultValue = "list all jokes", arity = 20) String term
     ) {
       SearchResponse response = customClient.search(page, limit, term);
       if (response == null) {
@@ -119,17 +117,5 @@ import java.util.StringJoiner;
         log.debug("Received joke: {}", customResponse.joke());
         log.debug("Status: {}", customResponse.status());
       }
-    }
-
-    /**
-     * Returns a string representation of the DadJokeCommand.
-     *
-     * @return a string representation of the DadJokeCommand.
-     */
-    @Override
-    public String toString() {
-      return new StringJoiner(", ", DadJokeCommand.class.getSimpleName() + "[", "]")
-               .add("customClient=" + customClient)
-               .toString();
     }
   }
