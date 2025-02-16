@@ -36,8 +36,8 @@ public class ShellExceptionResolver implements CommandExceptionResolver {
       .withExitCode()
       .map(BaseCustomShellException.class, 3)
       .map(throwable -> {
-        if (throwable instanceof BaseCustomShellException) {
-          return ((BaseCustomShellException) throwable).getExitCode();
+        if (throwable instanceof BaseCustomShellException shellException) {
+          return shellException.getExitCode();
         }
         return 0;
       })

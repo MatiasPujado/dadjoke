@@ -56,7 +56,7 @@ import org.springframework.shell.standard.ShellOption;
      * @throws Throwable if the ID is invalid or the joke is not found.
      */
     @ShellMethod(key = "joke", value = "Prints a dad joke fetched by ID.")
-    public String getSpecificJoke(@Option @ShellOption(defaultValue = "") String id) throws Throwable {
+    public String getSpecificJoke(@Option @ShellOption(defaultValue = "") String id) {
       if (id == null || id.isEmpty()) {
         throw InvalidCommandArgumentException.forArgument(id);
       }

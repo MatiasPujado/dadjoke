@@ -26,13 +26,13 @@ public class AppConfig {
                             .build();
 
     if (log.isDebugEnabled()) {
-      log.debug("WebClient created: {}", webClient.toString());
+      log.debug("WebClient created: {}", webClient);
     }
 
     HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(WebClientAdapter.create(webClient)).build();
 
     if (log.isDebugEnabled()) {
-      log.debug("HttpServiceProxyFactory created: {}", factory.toString());
+      log.debug("HttpServiceProxyFactory created: {}", factory);
     }
 
     return factory.createClient(CustomClient.class);
