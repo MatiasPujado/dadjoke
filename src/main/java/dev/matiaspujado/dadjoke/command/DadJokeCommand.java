@@ -21,7 +21,7 @@ import org.springframework.shell.standard.ShellOption;
   @ShellCommandGroup(value = "Dad Joke Commands")
   public class DadJokeCommand {
 
-    private static final Logger log = LoggerFactory.getLogger(DadJokeCommand.class);
+    private final Logger log = LoggerFactory.getLogger(DadJokeCommand.class);
     private final CustomClient customClient;
 
     /**
@@ -57,7 +57,7 @@ import org.springframework.shell.standard.ShellOption;
      */
     @ShellMethod(key = "joke", value = "Prints a dad joke fetched by ID.")
     public String getSpecificJoke(@Option @ShellOption(defaultValue = "") String id) {
-      if (id == null || id.isEmpty()) {
+      if (id == null || id.isBlank()) {
         throw InvalidCommandArgumentException.forArgument(id);
       }
       CustomResponse customResponse = customClient.specificJoke(id);
