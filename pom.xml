@@ -45,6 +45,7 @@
     <java.version>23</java.version>
     <spring-shell.version>3.4.0</spring-shell.version>
     <mockito-core.version>5.14.2</mockito-core.version>
+    <jacoco.version>0.8.12</jacoco.version>
   </properties>
 
   <dependencies>
@@ -109,13 +110,6 @@
       <version>3.0</version>
       <scope>test</scope>
     </dependency>
-
-    <!--  CI/CD  -->
-<!--    <dependency>-->
-<!--      <groupId>org.sonarsource.scanner.maven</groupId>-->
-<!--      <artifactId>sonar-maven-plugin</artifactId>-->
-<!--      <version>5.0.0.4389</version>-->
-<!--    </dependency>-->
   </dependencies>
 
   <dependencyManagement>
@@ -153,11 +147,31 @@
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
       <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>test</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.5.2</version>
         <configuration>
           <argLine>
+            -javaagent:${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.version}/org.jacoco.agent-${jacoco.version}-runtime.jar=destfile=${project.build.directory}/jacoco.exec
             -javaagent:${settings.localRepository}/org/mockito/mockito-core/${mockito-core.version}/mockito-core-${mockito-core.version}.jar
           </argLine>
           <systemPropertyVariables>
